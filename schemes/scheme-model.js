@@ -7,6 +7,7 @@ module.exports = {
   add,
   update,
   remove,
+  addStep,
 };
 
 function find() {
@@ -53,4 +54,10 @@ function remove(id) {
     .where('schemes.id', id)
     .del()
     .then(count => (count ? removedObject : null));
+}
+
+function addStep(step, scheme_id) {
+  return db('steps')
+    .insert({ ...step, scheme_id: scheme_id })
+    .then(([stepId]) => findSteps(scheme_id));
 }
